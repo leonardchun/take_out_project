@@ -810,6 +810,11 @@ Page({
       showModal: true
     });
   },
+  toSettleAccounts() {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
+  },
   closeModal(e) {
     this.setData({
       showModal: false
