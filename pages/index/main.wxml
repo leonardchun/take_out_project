@@ -41,87 +41,152 @@
     </view>
   </view>
 
-   <view class="tab">
-        <view class="goods-tab-nav {{tabIndex === 0 ?'on':''}}" bindtap="selectTabItem" data-index="0">下单</view>
-        <view class="goods-tab-nav {{tabIndex === 1 ?'on':''}}" bindtap="selectTabItem" data-index="1">订单</view>
-        <view class="goods-tab-nav {{tabIndex === 2 ?'on':''}}" bindtap="selectTabItem" data-index="2">我的</view>
+  <view class="tab">
+    <view class="goods-tab-nav {{tabIndex === 0 ?'on':''}}" bindtap="selectTabItem" data-index="0">下单</view>
+    <view class="goods-tab-nav {{tabIndex === 1 ?'on':''}}" bindtap="selectTabItem" data-index="1">订单</view>
+    <view class="goods-tab-nav {{tabIndex === 2 ?'on':''}}" bindtap="selectTabItem" data-index="2">我的</view>
 
-         <view class="goods-content">
-            <view wx:if="{{tabIndex === 0}}"> 
-            
-  <view class='food'>
-    <view class='food-class' style='height:{{listHeight}}px'>
-      <scroll-view scroll-y scroll-with-animation scroll-into-view="{{viewToLeft}}" style='height:{{listHeight}}px'>
-        <view class="food-class-item {{activeIndex==index?'active':''}}" wx:for="{{food}}" wx:key="item.title" bindtap='selectFood'
-          data-index="{{index}}" data-titleId="{{item.titleId}}" id="{{item.titleId+'left'}}">
-          <view class='text' data-index="{{index}}" data-titleId="{{item.titleId}}">{{item.title}}</view>
-          <view class="dot" wx:if="{{item.foodCount>0}}">{{item.foodCount}}</view>
-        </view>
-      </scroll-view>
-    </view>
-    <view class='food-detail'>
-      <scroll-view scroll-y scroll-with-animation style='height:{{listHeight}}px' scroll-into-view="{{viewTo}}"
-        bindscroll="scroll">
-        <view wx:for="{{food}}" wx:key="item.title" class="title-group" wx:for-index="groupindex">
-          <view class='title' id='{{item.titleId}}'>{{item.title}}</view>
-          <view wx:for="{{item.items}}" wx:key="item.goodId" class='food-info' wx:for-index="index">
-            <view class='img'>
-              <image src='/static/img/lahuhu.jpg'></image>
-            </view>
-            <view class='info'>
-              <view class='name'>{{item.name}}</view>
-              <view class='note'>{{item.note}}</view>
-              <view class='month'>
-                <text decode="{{true}}">月售{{item.monthNum}}&nbsp;&nbsp;</text>
-                <text>赞{{item.zan}}</text>
+    <view class="goods-content">
+      <view wx:if="{{tabIndex === 0}}">
+
+        <view class='food'>
+          <view class='food-class' style='height:{{listHeight}}px'>
+            <scroll-view scroll-y scroll-with-animation scroll-into-view="{{viewToLeft}}" style='height:{{listHeight}}px'>
+              <view class="food-class-item {{activeIndex==index?'active':''}}" wx:for="{{food}}" wx:key="item.title" bindtap='selectFood' data-index="{{index}}" data-titleId="{{item.titleId}}" id="{{item.titleId+'left'}}">
+                <view class='text' data-index="{{index}}" data-titleId="{{item.titleId}}">{{item.title}}</view>
+                <view class="dot" wx:if="{{item.foodCount>0}}">{{item.foodCount}}</view>
               </view>
-              <view class='price-count'>
-                <view class='price'>￥{{item.price}}</view>
-                <view class='count'>
-                  <view class='add btn' bindtap="add" data-item="{{item}}" data-groupindex="{{groupindex}}" data-index="{{index}}">+</view>
-                  <view class='num'>{{item.count}}</view>
-                  <view class='ruduce btn' bindtap="reduce" data-item="{{item}}" wx:if="{{item.count>0?true:false}}"
-                    data-groupindex="{{groupindex}}" data-index="{{index}}">-</view>
+            </scroll-view>
+          </view>
+          <view class='food-detail'>
+            <scroll-view scroll-y scroll-with-animation style='height:{{listHeight}}px' scroll-into-view="{{viewTo}}" bindscroll="scroll">
+              <view wx:for="{{food}}" wx:key="item.title" class="title-group" wx:for-index="groupindex">
+                <view class='title' id='{{item.titleId}}'>{{item.title}}</view>
+                <view wx:for="{{item.items}}" wx:key="item.goodId" class='food-info' wx:for-index="index">
+                  <view class='img'>
+                    <image src='/static/img/lahuhu.jpg'></image>
+                  </view>
+                  <view class='info'>
+                    <view class='name'>{{item.name}}</view>
+                    <view class='note'>{{item.note}}</view>
+                    <view class='month'>
+                      <text decode="{{true}}">月售{{item.monthNum}}&nbsp;&nbsp;</text>
+                      <text>赞{{item.zan}}</text>
+                    </view>
+                    <view class='price-count'>
+                      <view class='price'>￥{{item.price}}</view>
+                      <view class='count'>
+                        <view class='add btn' bindtap="add" data-item="{{item}}" data-groupindex="{{groupindex}}" data-index="{{index}}">+</view>
+                        <view class='num'>{{item.count}}</view>
+                        <view class='ruduce btn' bindtap="reduce" data-item="{{item}}" wx:if="{{item.count>0?true:false}}" data-groupindex="{{groupindex}}" data-index="{{index}}">-</view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+        </view>
+        <view class="cart">
+          <view class="cart-container">
+            <view class="cart-img {{cart.length>0?'has-food':''}}" bindtap="listCart">
+              <image src="{{cart.length>0?'/static/img/gouwuche-black.png':'/static/img/gouwuche.png'}}"></image>
+            </view>
+            <view class="del-price-money">
+              <view class="money">￥{{totalMoney}}</view>
+              <view class="del-price">{{storeInfo.delPrice>0?'另需配送费'+storeInfo.delPrice+'元':'免配送费'}}</view>
+            </view>
+            <view bindtap="toSettleAccounts" class="start-del {{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)?'has-food':''}}">{{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)? '去结算':storeInfo.minDelPrice+'元起送'}}</view>
+          </view>
+          <view class="cart-list" wx:if="{{showCart}}">
+            <view class="cart-list-header">清空购物车</view>
+            <view class="cart-list-item">
+              <view wx:for="{{cart}}" class="item">
+                <view class="cart-detail">{{item.name}}</view>
+                <view class="cart-detail" style="color:red">￥{{item.price}}</view>
+                <view class="cart-detail cart-count">
+                  <view class='add btn' bindtap="cartAdd" data-id="{{item.id}}">-</view>{{item.count}}
+                  <view class='add btn' bindtap="cartReduce" data-id="{{iten.id}}">+</view>
                 </view>
               </view>
             </view>
           </view>
         </view>
-      </scroll-view>
-    </view>
-  </view>
-  <view class="cart">
-    <view class="cart-container">
-      <view class="cart-img {{cart.length>0?'has-food':''}}" bindtap="listCart">
-        <image src="{{cart.length>0?'/static/img/gouwuche-black.png':'/static/img/gouwuche.png'}}"></image>
       </view>
-      <view class="del-price-money">
-        <view class="money">￥{{totalMoney}}</view>
-        <view class="del-price">{{storeInfo.delPrice>0?'另需配送费'+storeInfo.delPrice+'元':'免配送费'}}</view>
-      </view>
-      <view  bindtap="toSettleAccounts" class="start-del {{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)?'has-food':''}}">{{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)? '去结算':storeInfo.minDelPrice+'元起送'}}</view>
-    </view>
-    <view class="cart-list" wx:if="{{showCart}}">
-      <view class="cart-list-header">清空购物车</view>
-      <view class="cart-list-item">
-        <view wx:for="{{cart}}" class="item">
-          <view class="cart-detail">{{item.name}}</view>
-          <view class="cart-detail" style="color:red">￥{{item.price}}</view>
-          <view class="cart-detail cart-count">
-            <view class='add btn' bindtap="cartAdd"  data-id="{{item.id}}">-</view>{{item.count}}
-            <view
-              class='add btn' bindtap="cartReduce" data-id="{{iten.id}}">+</view>
+
+      <!--订单-->
+      <view wx:if="{{tabIndex === 1}}"> 我的订单列表，正在开发中 </view>
+
+      <!--我的-->
+      <view wx:if="{{tabIndex === 2}}">
+
+        <view class="userinfo">
+          <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击登录 </button>
+          <block wx:else>
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+          </block>
+        </view>
+
+        <view class="weui-panel">
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_small-appmsg">
+              <view class="weui-cells weui-cells_in-small-appmsg">
+                <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  <view class="weui-cell__hd">
+                    <icon class='icon iconfont icon-hongbao-m' style='font-size:40rpx;margin-right:30rpx'></icon>
+                  </view>
+                  <view class="weui-cell__bd weui-cell_primary">
+                    <view style='font-size:28rpx'>我的优惠券</view>
+                  </view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+                <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  <view class="weui-cell__hd">
+                    <icon class='icon iconfont icon-iconfontdizhi' style='font-size:40rpx;margin-right:30rpx'></icon>
+                  </view>
+                  <view class="weui-cell__bd weui-cell_primary">
+                    <view style='font-size:28rpx'>我的地址</view>
+                  </view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+                <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                  <view class="weui-cell__hd">
+                    <icon class='icon iconfont icon-liwuhuodong' style='font-size:40rpx;margin-right:30rpx'></icon>
+                  </view>
+                  <view class="weui-cell__bd weui-cell_primary">
+                    <view style='font-size:28rpx'>我的订单</view>
+                  </view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+                <view class="weui-cell weui-cell_access" bindtap="getPhoneNum" hover-class="weui-cell_active">
+                  <view class="weui-cell__hd">
+                    <icon class='icon iconfont icon-tubiao210' style='font-size:40rpx;margin-right:30rpx'></icon>
+                  </view>
+                  <view class="weui-cell__hd weui-cell_primary">
+                    <view style='font-size:28rpx'>商家电话</view>
+                  </view>
+                  <view class="weui-cell__bd" style='color:#ffd161;margin-left:20rpx;font-size:26rpx'>
+                    <view>19962107855</view>
+                  </view>
+                  <view class="weui-cell__ft" style='font-size:24rpx'>9:00-23:00</view>
+                  <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+              </view>
+            </view>
           </view>
         </view>
+
+        <view class="weui-panel" wx:if="{{hasUserInfo && canIUse}}">
+          <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <view class='weui-cell__bd' style='font-size:28rpx;text-align:center'>退出账号</view>
+          </view>
+        </view>
+
+
       </view>
     </view>
   </view>
-          
-            </view>
-            <view wx:if="{{tabIndex === 1}}">1 </view>
-            <view wx:if="{{tabIndex === 2}}">2</view>
-        </view>
-    </view>
 
 
 

@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     viewTo: "",
     viewToLeft: "",
     listHeight: 300,
@@ -812,12 +814,20 @@ Page({
   },
   toSettleAccounts() {
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '../order/index'
     })
   },
   closeModal(e) {
     this.setData({
       showModal: false
     });
+  },
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
   }
 });
