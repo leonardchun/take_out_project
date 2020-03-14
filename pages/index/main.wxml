@@ -40,12 +40,15 @@
       </view>
     </view>
   </view>
-  <view class="tab" bindtap="selectTabItem">
-    <view class="tab-item" data-index="0">下单</view>
-    <view class="tab-item" data-index="1">我的订单</view>
-     <view class="tab-item" data-index="2">评价</view>
-    <view class="border" style="left:{{30+tabIndex*160}}rpx"></view>
-  </view>
+
+   <view class="tab">
+        <view class="goods-tab-nav {{tabIndex === 0 ?'on':''}}" bindtap="selectTabItem" data-index="0">下单</view>
+        <view class="goods-tab-nav {{tabIndex === 1 ?'on':''}}" bindtap="selectTabItem" data-index="1">订单</view>
+        <view class="goods-tab-nav {{tabIndex === 2 ?'on':''}}" bindtap="selectTabItem" data-index="2">我的</view>
+
+         <view class="goods-content">
+            <view wx:if="{{tabIndex === 0}}"> 
+            
   <view class='food'>
     <view class='food-class' style='height:{{listHeight}}px'>
       <scroll-view scroll-y scroll-with-animation scroll-into-view="{{viewToLeft}}" style='height:{{listHeight}}px'>
@@ -96,7 +99,7 @@
         <view class="money">￥{{totalMoney}}</view>
         <view class="del-price">{{storeInfo.delPrice>0?'另需配送费'+storeInfo.delPrice+'元':'免配送费'}}</view>
       </view>
-      <view class="start-del {{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)?'has-food':''}}">{{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)?'去结算':storeInfo.minDelPrice+'元起送'}}</view>
+      <view  bindtap="toSettleAccounts" class="start-del {{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)?'has-food':''}}">{{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)? '去结算':storeInfo.minDelPrice+'元起送'}}</view>
     </view>
     <view class="cart-list" wx:if="{{showCart}}">
       <view class="cart-list-header">清空购物车</view>
@@ -113,4 +116,13 @@
       </view>
     </view>
   </view>
+          
+            </view>
+            <view wx:if="{{tabIndex === 1}}">1 </view>
+            <view wx:if="{{tabIndex === 2}}">2</view>
+        </view>
+    </view>
+
+
+
 </view>

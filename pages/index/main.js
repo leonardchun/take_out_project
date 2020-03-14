@@ -797,11 +797,10 @@ Page({
     }
   },
   selectTabItem(e) {
-    if (e.target.dataset.index) {
-      this.setData({
-        tabIndex: e.target.dataset.index
-      });
-    }
+    const index = parseInt(e.currentTarget.dataset.index);
+    this.setData({
+      tabIndex: index
+    })
   },
   preventScrollSwiper() {
     return false;

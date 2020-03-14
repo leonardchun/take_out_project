@@ -107,28 +107,26 @@
   background-color: #fd86ed;
 }
 
-.tab {
+.goods-content {
   height: 78rpx;
-  border-bottom: 2rpx solid #eee;
-  display: flex;
   position: relative;
 }
 
-.tab .tab-item {
-  width: 160rpx;
-  line-height: 78rpx;
-  text-align: center;
+.goods-tab-nav{
+    display: inline-block;
+    width: 33.33%;
+    height: 78rpx;
+    line-height: 90rpx;
+    box-sizing: border-box;
+    text-align: center;
+    border-bottom: 2rpx solid #ededed;
+
+}
+.goods-tab-nav.on{
+    color: #ffd161;
+    border-bottom: 5rpx solid #ffd161;
 }
 
-.tab .border {
-  position: absolute;
-  width: 100rpx;
-  height: 4rpx;
-  background-color: #ffd161;
-  top: 76rpx;
-  left: 30rpx;
-  transition: all 0.5s;
-}
 
 .food {
   display: flex;
