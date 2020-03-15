@@ -99,14 +99,14 @@
             <view bindtap="toSettleAccounts" class="start-del {{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)?'has-food':''}}">{{(totalMoney>=storeInfo.minDelPrice&&cart.length>0)? '去结算':storeInfo.minDelPrice+'元起送'}}</view>
           </view>
           <view class="cart-list" wx:if="{{showCart}}">
-            <view class="cart-list-header">清空购物车</view>
+            <view class="cart-list-header" bindtap="clearCart"  data-item="{{cart}}" >清空购物车</view>
             <view class="cart-list-item">
               <view wx:for="{{cart}}" class="item">
                 <view class="cart-detail">{{item.name}}</view>
                 <view class="cart-detail" style="color:red">￥{{item.price}}</view>
                 <view class="cart-detail cart-count">
-                  <view class='add btn' bindtap="cartAdd" data-id="{{item.id}}">-</view>{{item.count}}
-                  <view class='add btn' bindtap="cartReduce" data-id="{{iten.id}}">+</view>
+                  <view class='add btn' bindtap="cartReduce" data-item="{{item}}" data-index="{{index}}">-</view>{{item.count}}
+                  <view class='add btn' bindtap="cartAdd" data-item="{{item}}"  data-index="{{index}}">+</view>
                 </view>
               </view>
             </view>
